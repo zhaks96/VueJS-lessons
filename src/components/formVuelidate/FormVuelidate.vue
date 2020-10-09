@@ -1,11 +1,17 @@
 <template>
-  <form class="sign-up">
+  <form class="sign-up" @submit="checkForm">
     <div class="form-group">
       <label for="login">Логин:</label>
-      <input id="login" type="text" class="form-control" v-model.trim="form.login" />
-      <!-- <p class="invalid-feedback">
-          Ошибка!  is-invalid
-      </p> -->
+      <input
+        id="login"
+        type="text"
+        class="form-control"
+        v-model.trim="form.login"
+        :class="$v.form.login.$error ? 'is-invalid' : ''"
+      />
+      <p class="invalid-feedback">
+          Ошибка!
+      </p>
     </div>
     <div class="form-group">
       <label for="email">Почта:</label>
@@ -39,7 +45,12 @@
     </div>
     <div class="form-group">
       <label for="thems">Любимые темы:</label>
-      <select id="thems" class="form-control" multiple v-model="form.favoriteThems">
+      <select
+        id="thems"
+        class="form-control"
+        multiple
+        v-model="form.favoriteThems"
+      >
         <option v-for="(them, index) in thems" :key="index" :value="them.value">
           {{ them.label }}
         </option>
@@ -86,11 +97,12 @@
 </template>
 
 <script>
-import { required, minLength } from 'vuelidate/lib/validators'
-
+import { validationMixin } from "vuelidate";
+import { required, minLength, email } from "vuelidate/lib/validators";
 
 export default {
   name: "FormVuelidate",
+  mixins: [validationMixin],
   data() {
     return {
       form: {
@@ -102,7 +114,7 @@ export default {
         agreeWithSendEmail: false,
         gender: "male",
       },
-      name:'',
+      name: "",
       countries: [
         {
           label: "Қазақстан",
@@ -134,14 +146,23 @@ export default {
     };
   },
   validations: {
-      form:{
-          login:{
-              required,
-              minLength: minLength(5)
-          },
-
+    form: {
+      login: {
+        required,
+        minLength: minLength(5),
+      },
+      email: { required, email },
+      password: { required },
+    },
+  },
+  methods: {
+    checkForm() {
+      this.$v.form.$touch();
+      if (this.$v.form.$error) {
+        console.log('Валидация прошла успешно')
       }
-  }
+    },
+  },
 };
 </script>
 
