@@ -1,5 +1,5 @@
 <template>
-  <form class="sign-up" @submit="checkForm">
+  <form class="sign-up" @submit.prevent="checkForm">
     <div class="form-group">
       <label for="login">Логин:</label>
       <input
@@ -9,8 +9,11 @@
         v-model.trim="form.login"
         :class="$v.form.login.$error ? 'is-invalid' : ''"
       />
-      <p class="invalid-feedback">
-          Ошибка!
+      <p v-if="$v.form.login.$dirty && !$v.form.login.required" class="invalid-feedback">
+          Обязательное поле
+      </p>
+      <p v-if="$v.form.login.$dirty && !$v.form.login.minLength" class="invalid-feedback">
+          Здесь должно быть больше 5-и символов
       </p>
     </div>
     <div class="form-group">
@@ -20,7 +23,14 @@
         type="email"
         class="form-control"
         v-model.trim="form.email"
+        :class="$v.form.email.$error ? 'is-invalid' : ''"
       />
+      <p v-if="$v.form.email.$dirty && !$v.form.email.required" class="invalid-feedback">
+          Обязательное поле
+      </p>
+      <p v-if="$v.form.email.$dirty && !$v.form.email.email" class="invalid-feedback">
+          Email некорректный
+      </p>
     </div>
     <div class="form-group">
       <label for="password">Пароль:</label>
@@ -29,7 +39,11 @@
         type="password"
         class="form-control"
         v-model.trim="form.password"
+        :class="$v.form.password.$error ? 'is-invalid' : ''"
       />
+      <p v-if="$v.form.password.$dirty && !$v.form.password.required" class="invalid-feedback">
+          Обязательное поле
+      </p>
     </div>
     <div class="form-group">
       <label for="country">Страна проживания:</label>
@@ -158,7 +172,7 @@ export default {
   methods: {
     checkForm() {
       this.$v.form.$touch();
-      if (this.$v.form.$error) {
+      if (!this.$v.form.$error) {
         console.log('Валидация прошла успешно')
       }
     },
