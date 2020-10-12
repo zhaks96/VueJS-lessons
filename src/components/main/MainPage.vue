@@ -5,7 +5,7 @@
     </h1>
     <button type="button" 
       class="btn btn-outline-light" 
-      @click="$router.push({ name: 'films' })">
+      @click="$router.push({ name: 'lessons' })">
       Подробнее
     </button>
   </div>

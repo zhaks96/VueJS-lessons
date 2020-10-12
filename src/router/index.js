@@ -1,10 +1,14 @@
 import VueRouter from 'vue-router'
 
-import MainPage from '../pages/MainPage'
-import AllFilmsPage from '../pages/AllFilmsPage'
-import FilmPage from '../pages/FilmPage'
+import MainPage from '../components/main/MainPage'
+import Layout from '../components/main/Layout'
+import UserCard from '../components/UserCard'
+
+
+// import AllFilmsPage from '../pages/AllFilmsPage'
+// import FilmPage from '../pages/FilmPage'
 import NotFound from '../pages/404'
-import FilmsLayout from '../pages/FilmsLayout'
+// import FilmsLayout from '../pages/FilmsLayout'
 
 export default new VueRouter({
     mode: 'history',
@@ -15,30 +19,31 @@ export default new VueRouter({
             component: MainPage
         },
         {
-            path: '/films',
-            name: 'filmsLayout',
-            component: FilmsLayout,
+            path: '/lessons',
+            name: 'layout',
+            component: Layout,
             children:[
                 {
                     path: '',
-                    name: 'films',
-                    component: AllFilmsPage
+                    name: 'lessons',
+                    component: UserCard
                 },
-                {
-                    path: ':id',
-                    name: 'filmPage',
-                    component: FilmPage,
-                    beforeEnter: (to, from, next) =>{
-                        if(localStorage.getItem('auth')){
-                            next()
-                        }else{
-                            next({name: 'films'})
-                        }
-                    }
-                },
+                
+                // {
+                //     path: ':id',
+                //     name: 'filmPage',
+                //     component: FilmPage,
+                //     beforeEnter: (to, from, next) =>{
+                //         if(localStorage.getItem('auth')){
+                //             next()
+                //         }else{
+                //             next({name: 'lessons'})
+                //         }
+                //     }
+                // },
                 {
                     path: '*/*',
-                    redirect: { name: 'films' }
+                    redirect: { name: 'lessons' }
                 },
             ]
         },
