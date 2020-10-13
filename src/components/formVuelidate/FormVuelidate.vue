@@ -1,5 +1,6 @@
 <template>
-  <form class="sign-up container" @submit.prevent="checkForm">
+  <div class="container">
+    <form v-if="!registrationPassed" class="sign-up container" @submit.prevent="checkForm">
     <div class="form-group">
       <label for="login">Логин:</label>
       <input
@@ -9,11 +10,17 @@
         v-model.trim="form.login"
         :class="$v.form.login.$error ? 'is-invalid' : ''"
       />
-      <p v-if="$v.form.login.$dirty && !$v.form.login.required" class="invalid-feedback">
-          Обязательное поле
+      <p
+        v-if="$v.form.login.$dirty && !$v.form.login.required"
+        class="invalid-feedback"
+      >
+        Обязательное поле
       </p>
-      <p v-if="$v.form.login.$dirty && !$v.form.login.minLength" class="invalid-feedback">
-          Здесь должно быть больше 5-и символов
+      <p
+        v-if="$v.form.login.$dirty && !$v.form.login.minLength"
+        class="invalid-feedback"
+      >
+        Здесь должно быть больше 5-и символов
       </p>
     </div>
     <div class="form-group">
@@ -25,11 +32,17 @@
         v-model.trim="form.email"
         :class="$v.form.email.$error ? 'is-invalid' : ''"
       />
-      <p v-if="$v.form.email.$dirty && !$v.form.email.required" class="invalid-feedback">
-          Обязательное поле
+      <p
+        v-if="$v.form.email.$dirty && !$v.form.email.required"
+        class="invalid-feedback"
+      >
+        Обязательное поле
       </p>
-      <p v-if="$v.form.email.$dirty && !$v.form.email.email" class="invalid-feedback">
-          Email некорректный
+      <p
+        v-if="$v.form.email.$dirty && !$v.form.email.email"
+        class="invalid-feedback"
+      >
+        Email некорректный
       </p>
     </div>
     <div class="form-group">
@@ -41,8 +54,11 @@
         v-model.trim="form.password"
         :class="$v.form.password.$error ? 'is-invalid' : ''"
       />
-      <p v-if="$v.form.password.$dirty && !$v.form.password.required" class="invalid-feedback">
-          Обязательное поле
+      <p
+        v-if="$v.form.password.$dirty && !$v.form.password.required"
+        class="invalid-feedback"
+      >
+        Обязательное поле
       </p>
     </div>
     <div class="form-group">
@@ -64,11 +80,39 @@
         class="form-control"
         multiple
         v-model="form.favoriteThems"
+        :class="$v.form.favoiriteThemes.$error ? 'is-invalid' : ''"
       >
         <option v-for="(them, index) in thems" :key="index" :value="them.value">
           {{ them.label }}
         </option>
       </select>
+      <p
+        v-if="
+          $v.form.favoiriteThemes.$dirty && !$v.form.favoiriteThemes.maxCount
+        "
+        class="invalid-feedback"
+      >
+        Не больше 3-х тем
+      </p>
+    </div>
+    <div class="form-group form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="agreeWithRules"
+        v-model="form.agreeWithRules"
+      />
+      <label
+        class="form-check-label"
+        :class="$v.form.agreeWithRules.$error ? 'is-invalid' : ''"
+        for="agreeWithRules"
+        >Ознакомлен(а) с правилами</label>
+      <p
+        v-if="$v.form.agreeWithRules.$dirty && !$v.form.agreeWithRules.mustBeTrue"
+        class="invalid-feedback"
+      >
+        Прочтите правила !
+      </p>
     </div>
     <div class="form-group form-check">
       <input
@@ -108,6 +152,12 @@
     </div>
     <button type="submit" class="btn btn-primary">Сохранить</button>
   </form>
+  <div v-else>
+      <h1>
+        {{ `${ form.login }, поздравляем вы успешно зарегистрированы!` }}
+      </h1>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -120,11 +170,13 @@ export default {
   data() {
     return {
       form: {
+        registrationPassed: false,
         login: "",
         email: "",
         password: "",
         country: "kz",
         favoriteThems: ["IT"],
+        agreeWithRules: false,
         agreeWithSendEmail: false,
         gender: "male",
       },
@@ -167,13 +219,24 @@ export default {
       },
       email: { required, email },
       password: { required },
+      agreeWithRules: {
+        mustBeTrue(value) {
+          return value;
+        },
+      },
+      favoiriteThemes: {
+        maxCount(value) {
+          return value.length <= 3;
+        },
+      },
     },
   },
   methods: {
     checkForm() {
       this.$v.form.$touch();
       if (!this.$v.form.$error) {
-        console.log('Валидация прошла успешно')
+        console.log("Валидация прошла успешно");
+        this.registrationPassed = true;
       }
     },
   },

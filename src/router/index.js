@@ -14,9 +14,9 @@ import FormVuelidate from '../components/formVuelidate/FormVuelidate'
 
 import NotFound from '../pages/404'
 
-// import AllFilmsPage from '../pages/AllFilmsPage'
-// import FilmPage from '../pages/FilmPage'
-// import FilmsLayout from '../pages/FilmsLayout'
+import AllFilmsPage from '../pages/AllFilmsPage'
+import FilmPage from '../pages/FilmPage'
+import FilmsLayout from '../pages/FilmsLayout'
 
 export default new VueRouter({
     mode: 'history',
@@ -69,19 +69,29 @@ export default new VueRouter({
                     redirect: { name: 'lessons' }
                 },
 
-                // {
-                //     path: ':id',
-                //     name: 'filmPage',
-                //     component: FilmPage,
-                //     beforeEnter: (to, from, next) =>{
-                //         if(localStorage.getItem('auth')){
-                //             next()
-                //         }else{
-                //             next({name: 'lessons'})
-                //         }
-                //     }
-                // },
-
+            ]
+        },
+        {
+            path: '/films',
+            name: 'layout',
+            component: FilmsLayout,
+            children: [{
+                    path: '',
+                    name: 'films',
+                    component: AllFilmsPage
+                },
+                {
+                    path: ':id',
+                    name: 'filmPage',
+                    component: FilmPage,
+                    beforeEnter: (to, from, next) => {
+                        if (localStorage.getItem('auth')) {
+                            next()
+                        } else {
+                            next({ name: 'films' })
+                        }
+                    }
+                }
             ]
         },
         {

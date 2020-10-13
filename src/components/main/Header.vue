@@ -44,6 +44,14 @@
                     :to="{name: 'form-vuelidate'}">
                     Форма валидация
                 </router-link>
+                <router-link
+                    :to="{name: 'films'}">
+                    фильмы
+                </router-link>
+                <router-link
+                    :to="{name: 'form-vuelidate'}">
+                    Vuex / Что такое глобальное хранилище
+                </router-link>
             </div>
         </div>
         <button
