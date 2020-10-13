@@ -1,4 +1,4 @@
-import reactions from '../mocks/reactions'
+import reactions from '../../mocks/reactions'
 
 const loadReactions = (time) => {
     return new Promise((resolve) => {
