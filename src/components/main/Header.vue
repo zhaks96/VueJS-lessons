@@ -21,12 +21,29 @@
                     Информация
                 </router-link>
                 <router-link
-                    :to="{name: 'lessons2'}">
-                    Урок 2
+                    :to="{name: 'paginat'}">
+                    Пагинация
                 </router-link>
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
+                <router-link
+                    :to="{name: 'search'}">
+                    Поиск
+                </router-link>
+                <router-link
+                    :to="{name: 'product-list'}">
+                    Список продукты
+                </router-link>
+                <router-link
+                    :to="{name: 'text-editor'}">
+                    Текстовый редактор
+                </router-link>
+                <router-link
+                    :to="{name: 'modal-page'}">
+                    Модальное окно
+                </router-link>
+                <router-link
+                    :to="{name: 'form-vuelidate'}">
+                    Форма валидация
+                </router-link>
             </div>
         </div>
         <button
@@ -110,7 +127,7 @@ header {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 160px;
+  min-width: 180px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 

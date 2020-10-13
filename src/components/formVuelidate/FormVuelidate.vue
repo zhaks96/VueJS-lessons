@@ -1,5 +1,5 @@
 <template>
-  <form class="sign-up" @submit.prevent="checkForm">
+  <form class="sign-up container" @submit.prevent="checkForm">
     <div class="form-group">
       <label for="login">Логин:</label>
       <input

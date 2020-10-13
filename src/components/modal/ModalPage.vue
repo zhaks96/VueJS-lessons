@@ -1,9 +1,9 @@
 <template>
-    <div class="user-page">
+    <div class="user-page container">
         <button type="button"
                 class="btn btn-primary"
                 @click="openModal">
-                Отправить что нибудь
+                Открыть модальное окно
         </button>
         <modal
             v-if="isModalOpen"

@@ -1,5 +1,6 @@
 <template>
     <div class="text-editor">
+        <h1>Текстовый редактор</h1>
         <textarea v-model="text"></textarea>
         <div class="output-text" :inner-html.prop="text | marked"></div>
     </div>

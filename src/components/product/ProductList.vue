@@ -1,5 +1,5 @@
 <template>
-  <div class="product-list">
+  <div class="product-list container">
     <div class="flex top-information">
       <h1>Письменные столы {{ searchText }}</h1>
       <search @search="searchProducts" />
@@ -71,7 +71,8 @@ export default {
 
 <style lang="scss" scoped>
 li {
-  margin-right: 20px;
+  margin-right: 20px;    
+  display: flex;
 }
 .top-information {
   align-items: center;
