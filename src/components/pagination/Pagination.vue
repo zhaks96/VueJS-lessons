@@ -27,11 +27,29 @@
                 Пред.
             </div>
             <div class="page"
+                v-if="hasFirst()"
+                @click="pageClick(1)">
+                1
+            </div>
+            <div class="page_around"
+                v-if="hasFirst()">
+                ...
+            </div>
+            <div class="page"
                 v-for="page in pages"
                 :key="page"
                 :class="{'page__selected': pageNumber == page}"
                 @click="pageClick(page)">
                 {{page}}
+            </div>
+            <div class="page_around"
+                v-if="hasLast()">
+                ...
+            </div>
+            <div class="page"
+                v-if="hasLast()"
+                @click="pageClick(pagesCount)">
+                {{pagesCount}}
             </div>
             <div class="page"
                 v-if="hasNext()"
@@ -117,6 +135,12 @@ export default {
         nextPage(){
             return this.pageNumber+=1
         },
+        hasFirst(){
+            return this.rangeStart !==1
+        },
+        hasLast(){
+            return this.rangeEnd < this.pagesCount
+        }
         
     },
 }
@@ -144,6 +168,11 @@ export default {
         flex-wrap: wrap;
         justify-content: center;
         margin: 30px 0;
+        .page_around{
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+        }
         .page{
             padding: 8px;
             border: solid 1px #e7e7e7;
