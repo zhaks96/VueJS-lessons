@@ -60,8 +60,8 @@ export default {
         this.$log();
     },
     mounted(){
-        const modalBody = this.$refs.modalBody
-        modalBody.scrollTop = modalBody.scrollHeight - modalBody.clientHeight
+        // const modalBody = this.$refs.modalBody
+        // modalBody.scrollTop = modalBody.scrollHeight - modalBody.clientHeight
     },
     methods:{
         closeModal(){

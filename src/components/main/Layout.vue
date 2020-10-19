@@ -1,7 +1,7 @@
 <template>
   <div class="films-layout">
-    <app-header />
-    <router-view></router-view>
+      <app-header />
+      <router-view></router-view>    
   </div>
 </template>
 
@@ -9,6 +9,7 @@
 import AppHeader from './Header'
 
 export default {
-  components: { AppHeader }
+  components: { AppHeader },
+  
 }
 </script>
